@@ -22,8 +22,8 @@ class YouTubeDataAPI(object):
         except urllib2.HTTPError, err:
             raise YouTubeException(err.read())
 
-    def get_comment_threads(self, part="id,snippet", videoId="", order="relevance"):
-        return self._get_request("commentThreads", {"part": part, "videoId": videoId, "order": order})
+    def get_comment_threads(self, part="id,snippet", videoId="", order="relevance", pageToken=""):
+        return self._get_request("commentThreads", {"part": part, "videoId": videoId, "order": order, "pageToken": pageToken})
 
 
 class YouTubeException(Exception):

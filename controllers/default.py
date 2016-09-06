@@ -73,10 +73,15 @@ def extract_features(document):
 def index():
     my_classifier = get_classifier()
     video_id = request.vars['videoId']
+    page_token = request.vars['pageToken']
+    if not page_token:
+        page_token = ''
     youtube = YouTubeDataAPI()
-    response = youtube.get_comment_threads(videoId=video_id)
+    response = youtube.get_comment_threads(videoId=video_id, pageToken=page_token)
     sentiment_analysis_results = {}
     jData = json.loads(response)
+    #print jData
+    next_page_token = jData['nextPageToken']
     items = jData['items']
 
     for item in items:
@@ -87,7 +92,7 @@ def index():
         text_display = top_level_comment_snippet['textDisplay']
         sentiment_analysis_results[comment_id] = my_classifier.classify(extract_features(text_display.split()))
 
-    return dict(results=sentiment_analysis_results)
+    return dict(results=sentiment_analysis_results, nextPageToken=next_page_token)
 
 
 def user():
