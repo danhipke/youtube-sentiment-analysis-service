@@ -7,60 +7,10 @@
 # - user is required for authentication and authorization
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
-import nltk.classify.util
 import json
-import csv
-import os
-import cPickle as pickle
-from nltk import NaiveBayesClassifier, word_tokenize
+
+from applications.youtube_sentiment_analysis_service.modules import classifiers
 from youtubedataapi_w import YouTubeDataAPI
-
-
-def word_feats(words):
-    my_word_feats = dict([(word, True) for word in words])
-    return my_word_feats
-
-
-def get_classifier():
-    classifier = cache.ram('classifier', lambda: get_classifier_from_disk(), time_expire=60*60*24)
-    return classifier
-
-
-def get_classifier_from_disk():
-    if os.path.isfile('my_classifier.pickle'):
-        print 'Loading classifier from pickle'
-        classifier = pickle.load(open('my_classifier.pickle', 'rb'))
-    else:
-        print 'Training classifier'
-
-        negfeats = []
-        posfeats = []
-
-        with open(os.path.join(request.folder, 'data', 'twitter-sentiment-analysis-dataset.csv')) as csvfile:
-            tweet_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-            #skip first line
-            tweet_reader.next()
-            count = 0;
-            for tweet in tweet_reader:
-                words = word_tokenize(unicode(tweet[3].lower(), 'utf-8'))
-                if tweet[1] == '1':
-                    posfeats.append((word_feats(words), 'pos'))
-                else:
-                    negfeats.append((word_feats(words), 'neg'))
-                count += 1
-
-        negcutoff = len(negfeats) * 9 / 10
-        poscutoff = len(posfeats) * 9 / 10
-
-        trainfeats = negfeats[:negcutoff] + posfeats[:poscutoff]
-        testfeats = negfeats[negcutoff:] + posfeats[poscutoff:]
-        print 'Training on %d instances, test on %d instances' % (len(trainfeats), len(testfeats))
-
-        classifier = NaiveBayesClassifier.train(trainfeats)
-        pickle.dump(classifier, open('my_classifier.pickle', 'wb'))
-        print 'Accuracy:', nltk.classify.util.accuracy(classifier, testfeats)
-        classifier.show_most_informative_features()
-    return classifier
 
 def extract_features(document):
     document_words = set(document)
@@ -68,6 +18,10 @@ def extract_features(document):
     for document_word in document_words:
         features[document_word] = True
     return features
+
+def get_classifier():
+    classifier = cache.ram('classifier', lambda: classifiers.get_twitter_classifier(), time_expire=60*60*24)
+    return classifier
 
 
 def index():
