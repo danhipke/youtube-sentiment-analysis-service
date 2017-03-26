@@ -57,3 +57,6 @@ Thumbs.db
 venv
 node_modules
 .sass-cache
+
+modules/youtubedataapi_settings.py
+.idea/*

@@ -8,14 +8,14 @@
 # danhipke@yahoo.com
 # ---------------------------------------------------------------------------
 import urllib, urllib2
+from youtubedataapi_settings import youtubedataapi_key
 
 
 class YouTubeDataAPI(object):
     prefix_path = "https://www.googleapis.com/youtube/v3/"
-    api_key = ""
 
     def _get_request(self, path, params={}):
-        params["key"] = self.api_key
+        params["key"] = youtubedataapi_key
         url = "%s%s?%s" % (self.prefix_path, path, urllib.urlencode(params))
         try:
             return urllib2.urlopen(url).read()
