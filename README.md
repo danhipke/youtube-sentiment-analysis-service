@@ -7,7 +7,9 @@ Currently, the classifier is trained on a the publicly available Twitter Sentime
 
 Next, under the **youtube_sentiment_analysis_service** application, you need to copy **modules/youtubedataapi_settings_sample.py** to **modules/youtubedataapi_settings.py** and fill in youtubedataapi_key. Information on getting an API key is here https://developers.google.com/youtube/v3/getting-started
 
-Now you can startup Web2Py and go to the following URL (hostname/port may vary depending on where it is run)http://localhost:8000/youtube_sentiment_analysis_service/default/index.json?videoId=_GuOjXYl5ew
+Now you can startup Web2Py and go to the following URL (hostname/port may vary depending on where it is run):
+
+http://localhost:8000/youtube_sentiment_analysis_service/default/index.json?videoId=_GuOjXYl5ew
 
 Hitting this URL:
 * trains the classifier and pickles it
