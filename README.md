@@ -11,7 +11,7 @@ Now you can startup Web2Py and go to the following URL (hostname/port may vary d
 
 http://localhost:8000/youtube_sentiment_analysis_service/default/index.json?videoId=_GuOjXYl5ew
 
-Hitting this URL:
+Hitting this URL does two things:
 * trains the classifier and pickles it
 * analyzes the sentiment of a specific video with ID **_GuOjXYl5ew**
 
