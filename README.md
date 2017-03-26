@@ -10,7 +10,7 @@ Next, under the **youtube_sentiment_analysis_service** application, you need to 
 Now you can startup Web2Py and go to the following URL (hostname/port may vary depending on where it is run)http://localhost:8000/youtube_sentiment_analysis_service/default/index.json?videoId=_GuOjXYl5ew
 
 Hitting this URL:
-* trains the classifier
+* trains the classifier and pickles it
 * analyzes the sentiment of a specific video with ID **_GuOjXYl5ew**
 
 Training the classifier takes about 10 minutes. The service trains the classifier if it can't find a pickled one on disk. After the first train, the classifier is pickled.
