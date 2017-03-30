@@ -13,7 +13,7 @@ http://localhost:8000/youtube_sentiment_analysis_service/default/index.json?vide
 
 Hitting this URL does two things:
 * trains the classifier and pickles it
-* analyzes the sentiment of a specific video with ID **_GuOjXYl5ew**
+* analyzes the sentiment of the comments for a specific video with ID **_GuOjXYl5ew**
 
 Training the classifier takes about 10 minutes. The service trains the classifier if it can't find a pickled one on disk. After the first train, the classifier is pickled.
 
